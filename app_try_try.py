@@ -21,7 +21,7 @@ def download_model():
     global model_status
     try:
         model_status['status'] = 'Downloading'
-        model_url = 'https://drive.google.com/uc?export=download&id=1Nshs0xEK-5XAzL8shnKzpd5mldz2WfF9'
+        model_url = "https://drive.google.com/uc?export=download&id=1Nshs0xEK-5XAzL8shnKzpd5mldz2WfF9"
         gdown.download(model_url, model_path, quiet=False)
         model_status['status'] = 'Downloaded'
         model_status['message'] = 'Model successfully downloaded.'
