@@ -19,15 +19,20 @@ model_path = os.path.join(os.getcwd(), 'model', 'classifier.pkl')
 
 def download_model():
     global model_status
+    model_status['status'] = 'Downloading'
     try:
-        model_status['status'] = 'Downloading'
+        os.makedirs(model_dir, exist_ok=True)  # Ensure model directory exists
         model_url = 'https://drive.google.com/uc?export=download&id=1Nshs0xEK-5XAzL8shnKzpd5mldz2WfF9'
-        gdown.download(model_url, model_path, quiet=False)
-        model_status['status'] = 'Downloaded'
-        model_status['message'] = 'Model successfully downloaded.'
+        response = gdown.download(model_url, model_path, quiet=False)
+        if response:
+            model_status['status'] = 'Downloaded'
+            model_status['message'] = 'Model successfully downloaded.'
+        else:
+            raise Exception("Download failed.")
     except Exception as e:
         model_status['status'] = 'Error'
         model_status['message'] = f'Error downloading model: {str(e)}'
+
 
 # Check if the model already exists locally
 if not os.path.exists(model_path):
