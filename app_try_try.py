@@ -23,22 +23,26 @@ def download_model():
     model_status['status'] = 'Downloading'
     try:
         os.makedirs(model_dir, exist_ok=True)  # Ensure model directory exists
-        
+
         # Replace with your OneDrive direct download link
-        model_url = 'https://annauniv0-my.sharepoint.com/:u:/g/personal/2022115109_student_annauniv_edu/EY_JBM5lZ-5AjHnqDikLmXcBX51tyysyP-uyI3YnSvC2_g?e=B08gk6'
+        model_url = 'https://onedrive.live.com/download?cid=YOUR_CID&resid=YOUR_RES_ID&authkey=YOUR_AUTH_KEY'
         
         # Download the file from OneDrive
         response = requests.get(model_url)
         if response.status_code == 200:
             with open(model_path, 'wb') as f:
                 f.write(response.content)
-            model_status['status'] = 'Downloaded'
-            model_status['message'] = 'Model successfully downloaded.'
+            # Check file size after download
+            if os.path.exists(model_path):
+                file_size = os.path.getsize(model_path)
+                model_status['message'] = f'Model downloaded successfully. File size: {file_size} bytes'
+                model_status['status'] = 'Downloaded'
         else:
             raise Exception("Download failed with status code: {}".format(response.status_code))
     except Exception as e:
         model_status['status'] = 'Error'
         model_status['message'] = f'Error downloading model: {str(e)}'
+
 
 # Check if the model already exists locally
 if not os.path.exists(model_path):
