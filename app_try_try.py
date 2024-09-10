@@ -2,6 +2,7 @@ from flask import Flask, request, jsonify, redirect, url_for
 import joblib
 import pandas as pd
 import os
+import requests
 from flask_cors import CORS
 
 app = Flask(__name__)
@@ -13,8 +14,38 @@ model_status = {
     'message': ''
 }
 
-# Path where the uploaded model is saved
-model_path = 'https://annauniv0-my.sharepoint.com/:u:/g/personal/2022115109_student_annauniv_edu/EY_JBM5lZ-5AjHnqDikLmXcBX51tyysyP-uyI3YnSvC2_g?e=B08gk6'
+# Directory and path where the model will be saved
+model_dir = os.path.join(os.getcwd(), 'model')
+model_path = os.path.join(model_dir, 'classifier.pkl')
+
+def download_model():
+    global model_status
+    model_status['status'] = 'Downloading'
+    try:
+        os.makedirs(model_dir, exist_ok=True)  # Ensure model directory exists
+        
+        # Replace with your OneDrive direct download link
+        model_url = 'https://annauniv0-my.sharepoint.com/:u:/g/personal/2022115109_student_annauniv_edu/EY_JBM5lZ-5AjHnqDikLmXcBX51tyysyP-uyI3YnSvC2_g?e=B08gk6'
+        
+        # Download the file from OneDrive
+        response = requests.get(model_url)
+        if response.status_code == 200:
+            with open(model_path, 'wb') as f:
+                f.write(response.content)
+            model_status['status'] = 'Downloaded'
+            model_status['message'] = 'Model successfully downloaded.'
+        else:
+            raise Exception("Download failed with status code: {}".format(response.status_code))
+    except Exception as e:
+        model_status['status'] = 'Error'
+        model_status['message'] = f'Error downloading model: {str(e)}'
+
+# Check if the model already exists locally
+if not os.path.exists(model_path):
+    download_model()
+else:
+    model_status['status'] = 'Loaded'
+    model_status['message'] = 'Model already exists locally.'
 
 try:
     # Load the model
