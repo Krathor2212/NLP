@@ -14,7 +14,7 @@ model_status = {
 }
 
 # Path where the uploaded model is saved
-model_path = '/mnt/data/class.pkl'
+model_path = 'https://annauniv0-my.sharepoint.com/:u:/g/personal/2022115109_student_annauniv_edu/EY_JBM5lZ-5AjHnqDikLmXcBX51tyysyP-uyI3YnSvC2_g?e=B08gk6'
 
 try:
     # Load the model
