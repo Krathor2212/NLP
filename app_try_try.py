@@ -23,7 +23,7 @@ def download_model():
     model_status['status'] = 'Downloading'
     try:
         os.makedirs(model_dir, exist_ok=True)  # Ensure model directory exists
-        model_url = 'https://drive.google.com/uc?export=download&id=1Nshs0xEK-5XAzL8shnKzpd5mldz2WfF9'
+        model_url = 'https://annauniv0-my.sharepoint.com/:u:/g/personal/2022115109_student_annauniv_edu/EY_JBM5lZ-5AjHnqDikLmXcBX51tyysyP-uyI3YnSvC2_g?e=CzP2XI'
         response = gdown.download(model_url, model_path, quiet=False)
         if response:
             model_status['status'] = 'Downloaded'
