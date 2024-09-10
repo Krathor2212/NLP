@@ -25,7 +25,7 @@ def download_model():
         os.makedirs(model_dir, exist_ok=True)  # Ensure model directory exists
 
         # Replace with your OneDrive direct download link
-        model_url = 'https://onedrive.live.com/download?cid=YOUR_CID&resid=YOUR_RES_ID&authkey=YOUR_AUTH_KEY'
+        model_url = 'https://annauniv0-my.sharepoint.com/:u:/g/personal/2022115109_student_annauniv_edu/EY_JBM5lZ-5AjHnqDikLmXcBX51tyysyP-uyI3YnSvC2_g?e=B08gk6'
         
         # Download the file from OneDrive
         response = requests.get(model_url)
