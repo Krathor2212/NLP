@@ -2,7 +2,6 @@ from flask import Flask, request, jsonify, redirect, url_for
 import joblib
 import pandas as pd
 import os
-import gdown
 from flask_cors import CORS
 
 app = Flask(__name__)
@@ -14,32 +13,8 @@ model_status = {
     'message': ''
 }
 
-# Directory and path where the model will be saved
-model_dir = os.path.join(os.getcwd(), 'model')
-model_path = os.path.join(model_dir, 'classifier.pkl')
-
-def download_model():
-    global model_status
-    model_status['status'] = 'Downloading'
-    try:
-        os.makedirs(model_dir, exist_ok=True)  # Ensure model directory exists
-        model_url = 'https://annauniv0-my.sharepoint.com/:u:/g/personal/2022115109_student_annauniv_edu/EY_JBM5lZ-5AjHnqDikLmXcBX51tyysyP-uyI3YnSvC2_g?e=CzP2XI'
-        response = gdown.download(model_url, model_path, quiet=False)
-        if response:
-            model_status['status'] = 'Downloaded'
-            model_status['message'] = 'Model successfully downloaded.'
-        else:
-            raise Exception("Download failed.")
-    except Exception as e:
-        model_status['status'] = 'Error'
-        model_status['message'] = f'Error downloading model: {str(e)}'
-
-# Check if the model already exists locally
-if not os.path.exists(model_path):
-    download_model()
-else:
-    model_status['status'] = 'Loaded'
-    model_status['message'] = 'Model already exists locally.'
+# Path where the uploaded model is saved
+model_path = '/mnt/data/class.pkl'
 
 try:
     # Load the model
