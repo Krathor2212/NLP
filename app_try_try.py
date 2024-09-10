@@ -16,7 +16,7 @@ model_status = {
 
 # Directory and path where the model will be saved
 model_dir = os.path.join(os.getcwd(), 'model')
-model_path = os.path.join(model_dir, 'classifier.pkl')
+model_path = os.path.join(model_dir, 'class.pkl')
 
 def download_model():
     global model_status
